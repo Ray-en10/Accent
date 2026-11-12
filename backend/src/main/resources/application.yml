@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:55432/tricity
+    username: tricity
+    password: tricity
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring.web.cors:
+  allowed-origins: http://localhost:4200

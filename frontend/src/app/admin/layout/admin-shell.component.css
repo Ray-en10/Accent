@@ -1,0 +1,21 @@
+.admin-layout{min-height:100vh;display:grid;grid-template-columns:278px 1fr;background:#f1f3fa}
+.admin-layout aside{background:white;color:var(--ink);padding:28px 0 20px;display:flex;flex-direction:column;border-radius:0 58px 58px 0;box-shadow:8px 0 30px rgba(48,24,76,.05);overflow:hidden}
+.admin-layout .logo{display:flex;align-items:center;gap:10px;color:var(--ink);padding:0 28px;font:700 1.55rem "Space Grotesk";letter-spacing:-.06em;text-decoration:none}
+.logo-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--brand);box-shadow:4px 4px 0 var(--lime);transform:rotate(-6deg)}
+.logo-mark svg{width:20px;height:20px;fill:var(--lime);stroke:none;transform:rotate(6deg)}
+.profile{display:flex;gap:10px;align-items:center;margin:58px 28px 34px}
+.avatar{display:grid;place-items:center;background:var(--lime);color:var(--ink);font-weight:700;border-radius:50%;width:36px;height:36px}
+.profile small{display:block;color:var(--muted);margin-top:3px;font-size:.72rem}
+.admin-layout nav{display:grid}
+.admin-layout nav>a,.nav-group,.subnav a{display:flex;align-items:center;gap:12px;padding:17px 28px;color:#33405d;text-decoration:none;border:0;border-bottom:1px solid #e8ecf3;background:transparent;font:inherit;text-align:left;cursor:pointer}
+.admin-layout nav>a,.nav-group{font-weight:600}
+.admin-layout nav>a svg,.nav-group svg,.logout svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.admin-layout nav>a span,.nav-group span{flex:1}
+.admin-layout nav>a b,.nav-group b{margin-left:auto;color:#91a0bd;font-size:1.1rem;line-height:1;transition:transform .2s}
+.nav-group b.open{transform:rotate(180deg)}
+.admin-layout nav>a.selected,.nav-group.selected,.subnav a.selected{color:#487dff;background:#f8faff}
+.subnav{display:grid;padding-left:28px}
+.subnav a{padding:13px 13px;color:#33405d}
+.logout{display:flex;align-items:center;gap:12px;color:#33405d;text-decoration:none;padding:17px 28px;margin-top:auto;border-top:1px solid #e8ecf3}
+.admin-main{padding:42px 5%;max-width:1450px;width:100%;margin:auto}
+@media(max-width:900px){.admin-layout{grid-template-columns:1fr}.admin-layout aside{border-radius:0;padding-bottom:0}.admin-layout nav{display:block;max-height:430px;overflow:auto}.subnav{display:none}.logout{margin-top:0}.admin-main{padding:28px 20px}}
