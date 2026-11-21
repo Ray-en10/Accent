@@ -9,6 +9,11 @@ services:
       - "55432:5432"
     volumes:
       - tricity-postgres:/var/lib/postgresql/data
+  maildev:
+    image: maildev/maildev:2.2.1
+    ports:
+      - "1025:1025"
+      - "1080:1080"
 
 volumes:
   tricity-postgres:

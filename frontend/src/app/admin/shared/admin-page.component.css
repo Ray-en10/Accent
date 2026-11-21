@@ -1,8 +1,2 @@
-.page-header{margin-bottom:28px}
-.page-header h1{font-size:2.7rem;margin-top:2px}
-.page-card{padding:30px}
-.page-card h2{font-size:1.5rem}
-.page-card p{color:var(--muted)}
-.empty-state{margin-top:28px;padding:45px;text-align:center;
-    background:var(--bg);border-radius:14px;color:var(--muted)}
+.page-header{display:flex;justify-content:space-between;align-items:end;margin-bottom:26px}.page-header h1{font-size:2.65rem;margin-top:6px}.page-intro{color:var(--muted);margin:10px 0 0}.page-card{padding:27px}.page-card h2{font-size:1.45rem;margin-top:6px}.page-card-head{display:flex;justify-content:space-between;align-items:start}.live-state{font-size:.76rem;color:var(--green);font-weight:700}.empty-state{margin-top:25px;padding:55px 25px;text-align:center;background:var(--bg);border:1px dashed #dfe2eb;border-radius:12px;color:var(--muted)}.empty-icon{display:grid;place-items:center;width:42px;height:42px;margin:0 auto 13px;border-radius:12px;background:#e9e5f4;color:var(--brand);font-size:1.5rem}.empty-state b{display:block;color:var(--ink);font:600 1rem "Space Grotesk"}.empty-state p{max-width:390px;margin:8px auto 20px;font-size:.88rem}@media(max-width:700px){.page-header{align-items:flex-start;gap:18px;flex-direction:column}.page-card{padding:20px}}
 

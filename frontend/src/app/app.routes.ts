@@ -13,12 +13,18 @@ import { AlertManagementComponent } from './admin/alerts/alert-management.compon
 import { AlertHistoryComponent } from './admin/alerts/alert-history.component';
 import { AdministrationComponent } from './admin/administration/administration.component';
 import { MiscComponent } from './admin/misc/misc.component';
+import { ConsumptionComponent } from './admin/consumption/consumption.component';
+import { RegionDetailsComponent } from './admin/consumption/region-details.component';
+import { ClientDashboardComponent } from './client/client-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'connexion', component: AuthComponent },
+  { path: 'client', component: ClientDashboardComponent },
   { path: 'admin', component: AdminShellComponent, children: [
     { path: '', component: AdminComponent },
+    { path: 'consommation', component: ConsumptionComponent },
+    { path: 'consommation/:id', component: RegionDetailsComponent },
     { path: 'historique', component: HistoryComponent },
     { path: 'historique/energy', component: EnergyComponent },
     { path: 'historique/details', component: DetailsComponent },
