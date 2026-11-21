@@ -25,7 +25,7 @@ type ClientSection = 'overview' | 'history' | 'circuits' | 'objectives' | 'repor
   template: `
   <div class="client-layout">
     <aside class="sidebar">
-      <a class="brand" routerLink="/"><span class="brand-mark">T</span><span>Tricity</span></a>
+      <a class="tricity-logo" routerLink="/"><span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 2 5 13h5l-1 9 8.5-12h-5z"/></svg></span><span>Tricity</span></a>
 
       <nav class="main-nav" aria-label="Navigation client">
         <button type="button" [class.active]="section === 'overview'" (click)="changeSection('overview')">
