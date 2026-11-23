@@ -41,10 +41,12 @@ public class ApiController {
   }
   public record AuthRequest(@NotBlank @Email String email, @NotBlank String password) {}
   public record RegisterRequest(@NotBlank String name, @NotBlank @Email String email, @NotBlank String password) {}
-  public record AccountRequest(@NotBlank String name, @NotBlank @Email String email, @NotNull User.Role role, User.Status status) {}
+  public record AccountRequest(@NotBlank String name, @NotBlank @Email String email, @NotNull User.Role role, User.Status status,
+      String phone, String governorate, String city, String address, String meterType, Integer circuitCount, String subscribedPower) {}
   public record UserResponse(Long id, String name, String email, User.Role role, User.Status status,
       String phone, String governorate, String city, String address, String meterType, Integer circuitCount, String subscribedPower) {}
   public record PasswordChangeRequest(@NotBlank String currentPassword, @NotBlank String newPassword) {}
+  public record PasswordResetRequest(@NotBlank @Email String email) {}
   public record CircuitPayload(@NotBlank String name, @NotBlank String meter, @NotBlank String type, int goal, String equipment) {}
   public record CircuitResponse(Long id, String name, String meter, String type, int goal, String equipment) {}
   public record Dashboard(long totalConsumption, long activeSites, long alerts, List<Integer> chart, List<AccountRow> recentAccounts) {}
@@ -64,6 +66,22 @@ public class ApiController {
   public ResponseEntity<UserResponse> login(@Valid @RequestBody AuthRequest request) {
     return users.findByEmailIgnoreCase(request.email()).filter(user -> passwordEncoder.matches(request.password(), user.getPassword()))
       .map(user -> ResponseEntity.ok(toResponse(user))).orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+  }
+  @PostMapping("/auth/password/reset")
+  public ResponseEntity<Void> resetPassword(@Valid @RequestBody PasswordResetRequest request) {
+    Optional<User> found = users.findByEmailIgnoreCase(request.email());
+    if (found.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+    User user = found.get();
+    String temporaryPassword = generatePassword();
+    user.setPassword(passwordEncoder.encode(temporaryPassword));
+    users.save(user);
+    try {
+      accountMail.sendPasswordReset(user.getName(), user.getEmail(), temporaryPassword);
+      return ResponseEntity.ok().build();
+    } catch (MailException exception) {
+      return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+    }
   }
   @PostMapping("/auth/register")
   public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
@@ -101,6 +119,8 @@ public class ApiController {
     }
     User user = new User(request.name(), request.email(), passwordEncoder.encode(temporaryPassword), request.role());
     if (request.status() == User.Status.INACTIVE) user.setStatus(User.Status.INACTIVE);
+    user.setProfile(request.phone(), request.governorate(), request.city(), request.address(),
+      request.meterType(), request.circuitCount(), request.subscribedPower());
     user = users.save(user);
     if (request.role() == User.Role.CLIENT) seedDefaultCircuits(user);
     return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(user));
@@ -120,6 +140,10 @@ public class ApiController {
     if (existingEmail.isPresent() && !existingEmail.get().getId().equals(id)) return ResponseEntity.status(HttpStatus.CONFLICT).build();
     return users.findById(id).map(user -> {
       user.update(request.name(), request.email(), user.getPassword(), request.role(), request.status() == null ? user.getStatus() : request.status());
+      user.setProfile(request.phone(), request.governorate(), request.city(), request.address(),
+        request.meterType() == null ? user.getMeterType() : request.meterType(),
+        request.circuitCount() == null ? user.getCircuitCount() : request.circuitCount(),
+        request.subscribedPower() == null ? user.getSubscribedPower() : request.subscribedPower());
       return ResponseEntity.ok(toResponse(users.save(user)));
     }).orElseGet(() -> ResponseEntity.notFound().build());
   }
@@ -168,7 +192,7 @@ public class ApiController {
       request.getPayment(), request.getNotes(), request.getSoloQuantity(), request.getDuoQuantity(), request.getStatus(),
       request.getCreatedAt().toString().substring(0, 10));
   }
-  private String roleLabel(User.Role role) { return Map.of(User.Role.ADMIN, "Back-office", User.Role.CLIENT, "Client", User.Role.INSTALLER, "Installateur").get(role); }
+  private String roleLabel(User.Role role) { return Map.of(User.Role.ADMIN, "Back-office", User.Role.CLIENT, "Client", User.Role.INSTALLER, "Installateur", User.Role.NETWORK_MANAGER, "Responsable réseau").get(role); }
   private String generatePassword() {
     StringBuilder password = new StringBuilder(12);
     for (int i = 0; i < 12; i++) password.append(PASSWORD_CHARS.charAt(random.nextInt(PASSWORD_CHARS.length())));

@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-export interface NewAccount { name: string; email: string; role: 'CLIENT' | 'INSTALLER' | 'ADMIN'; status?: 'ACTIVE' | 'INACTIVE'; }
-export interface Account { id: number; name: string; email: string; role: 'CLIENT' | 'INSTALLER' | 'ADMIN'; status: 'ACTIVE' | 'INACTIVE'; }
+export interface NewAccount { name: string; email: string; role: 'CLIENT' | 'INSTALLER' | 'ADMIN' | 'NETWORK_MANAGER'; status?: 'ACTIVE' | 'INACTIVE'; phone?: string; governorate?: string; city?: string; address?: string; meterType?: string; circuitCount?: number; subscribedPower?: string; }
+export interface Account { id: number; name: string; email: string; role: 'CLIENT' | 'INSTALLER' | 'ADMIN' | 'NETWORK_MANAGER'; status: 'ACTIVE' | 'INACTIVE'; phone?: string; governorate?: string; city?: string; address?: string; meterType?: string; circuitCount?: number; subscribedPower?: string; }
 export interface Dashboard { totalConsumption: number; activeSites: number; alerts: number; chart: number[]; recentAccounts: { name: string; email: string; role: string; createdAt: string }[]; }
 export interface ConsumptionPlace { name: string; consumption: number; status: string; updatedAt: string; }
 export interface ConsumptionRegion { id: string; name: string; consumption: number; sites: number; change: number; places: ConsumptionPlace[]; }

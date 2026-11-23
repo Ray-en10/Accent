@@ -6,7 +6,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "users")
 public class User {
-  public enum Role { ADMIN, CLIENT, INSTALLER }
+  public enum Role { ADMIN, CLIENT, INSTALLER, NETWORK_MANAGER }
   public enum Status { ACTIVE, INACTIVE }
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
   @Column(nullable = false) private String name;

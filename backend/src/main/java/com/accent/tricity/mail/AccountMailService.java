@@ -24,7 +24,10 @@ public class AccountMailService {
         Email : %s
         Mot de passe temporaire : %s
 
-        Connectez-vous sur xxxx puis changez votre mot de passe.
+        Accès de connexion :
+        http://127.0.0.1:4200/connexion
+
+        Utilisez les identifiants ci-dessus puis changez votre mot de passe.
         """.formatted(name, email, temporaryPassword));
     sender.send(message);
   }
@@ -43,6 +46,25 @@ public class AccountMailService {
 
         Si vous n'êtes pas à l'origine de cette modification, contactez immédiatement le support ACCENT.
         """.formatted(name, email, newPassword));
+    sender.send(message);
+  }
+
+  public void sendPasswordReset(String name, String email, String temporaryPassword) {
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setTo(email);
+    message.setSubject("Réinitialisation de votre mot de passe Tricity");
+    message.setText("""
+        Bonjour %s,
+
+        Une demande de réinitialisation a été effectuée pour votre compte Tricity.
+
+        Email : %s
+        Mot de passe temporaire : %s
+
+        Connectez-vous sur http://127.0.0.1:4200/connexion puis changez immédiatement ce mot de passe.
+
+        Si vous n'êtes pas à l'origine de cette demande, contactez immédiatement le support ACCENT.
+        """.formatted(name, email, temporaryPassword));
     sender.send(message);
   }
 }

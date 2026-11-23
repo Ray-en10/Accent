@@ -16,11 +16,13 @@ import { MiscComponent } from './admin/misc/misc.component';
 import { ConsumptionComponent } from './admin/consumption/consumption.component';
 import { RegionDetailsComponent } from './admin/consumption/region-details.component';
 import { ClientDashboardComponent } from './client/client-dashboard.component';
+import { InstallerDashboardComponent } from './installer/installer-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'connexion', component: AuthComponent },
   { path: 'client', component: ClientDashboardComponent },
+  { path: 'installateur', component: InstallerDashboardComponent },
   { path: 'admin', component: AdminShellComponent, children: [
     { path: '', component: AdminComponent },
     { path: 'consommation', component: ConsumptionComponent },
