@@ -2,14 +2,17 @@ package com.accent.tricity.mail;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountMailService {
   private final JavaMailSender sender;
+  private final String publicUrl;
 
-  public AccountMailService(JavaMailSender sender) {
+  public AccountMailService(JavaMailSender sender, @Value("${app.public-url}") String publicUrl) {
     this.sender = sender;
+    this.publicUrl = publicUrl;
   }
 
   public void sendCredentials(String name, String email, String temporaryPassword) {
@@ -25,10 +28,10 @@ public class AccountMailService {
         Mot de passe temporaire : %s
 
         Accès de connexion :
-        http://127.0.0.1:4200/connexion
+        %s/connexion
 
         Utilisez les identifiants ci-dessus puis changez votre mot de passe.
-        """.formatted(name, email, temporaryPassword));
+        """.formatted(name, email, temporaryPassword, publicUrl));
     sender.send(message);
   }
 
@@ -44,8 +47,10 @@ public class AccountMailService {
         Email : %s
         Nouveau mot de passe : %s
 
+        Accès de connexion : %s/connexion
+
         Si vous n'êtes pas à l'origine de cette modification, contactez immédiatement le support ACCENT.
-        """.formatted(name, email, newPassword));
+        """.formatted(name, email, newPassword, publicUrl));
     sender.send(message);
   }
 
@@ -61,10 +66,10 @@ public class AccountMailService {
         Email : %s
         Mot de passe temporaire : %s
 
-        Connectez-vous sur http://127.0.0.1:4200/connexion puis changez immédiatement ce mot de passe.
+        Connectez-vous sur %s/connexion puis changez immédiatement ce mot de passe.
 
         Si vous n'êtes pas à l'origine de cette demande, contactez immédiatement le support ACCENT.
-        """.formatted(name, email, temporaryPassword));
+        """.formatted(name, email, temporaryPassword, publicUrl));
     sender.send(message);
   }
 }

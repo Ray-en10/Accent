@@ -67,6 +67,10 @@ public class ApiController {
     return users.findByEmailIgnoreCase(request.email()).filter(user -> passwordEncoder.matches(request.password(), user.getPassword()))
       .map(user -> ResponseEntity.ok(toResponse(user))).orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
   }
+  @GetMapping("/health")
+  public Map<String, String> health() {
+    return Map.of("status", "ok");
+  }
   @PostMapping("/auth/password/reset")
   public ResponseEntity<Void> resetPassword(@Valid @RequestBody PasswordResetRequest request) {
     Optional<User> found = users.findByEmailIgnoreCase(request.email());
