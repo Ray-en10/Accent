@@ -8,12 +8,13 @@ Initial Angular + Spring Boot + PostgreSQL foundation for Tricity.
 2. Start the API from `backend`: `mvn spring-boot:run`
 3. Start the UI from `frontend`: `npm install` then `npm start`
 
-Demo back-office access:
+Demo accounts:
 
-- Email: `admin@admin.com`
-- Password: `mdp admin`
+- Admin: `admin@admin.com` / `mdp admin`
+- Client: `client-test@gmail.com` / `12345678`
+- Installer: `Installer-test@gmail.com` / `12345678`
 
-The demo credentials are seeded by the API for local development only.
+These accounts are seeded by the API. Use the role buttons on the login page to fill in their credentials.
 
 Back-office account creation generates a temporary password, hashes it in the API, and sends the login details through MailDev. Open the MailDev inbox at http://localhost:1080 after creating a client or installer from **Administration**.
 
